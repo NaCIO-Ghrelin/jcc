@@ -1,0 +1,105 @@
+<<< hello world! ;
+
+~~ #inject <file name> [<line#>] { <code to inject> }
+#inject lexer.cpp [63] {
+    else if ( c == '`' ) {
+        current_token.type = TokenType::TEST_PRINTING;
+
+    }
+}
+
+
+~~ python equivalent: print("hello world!")
+~~ the spaces between "<<<" and "hello world!" are not required, nor is the one between "hello world!" and ";".
+~~ the compiler does not change the output up to one space. so there is no differance between, "<<<hello world!;", and, "<<< hello world! ;".
+~~ another thing to note is that in jc, everything is meant to be easier, so this means that you dont even need the semicolon at the end  ^ !!
+~~ but if i were to add two spaces in between like "<<<  hello world!  ;" then the output would be " hello world! " instead of "hello world!".
+~~ use an extra '<' to remove the newline "<<<< hello world! ;" == printf("hello world!"); instead of printf("hello world!\n");
+~~ jayci (jc) vs python (py) comparison:
+~~      jc: "<<< hello world! ;"
+~~      py: "print("hello world!")"
+~~      jc: "<<<hello world!"       ~~ 6 chars less!
+
+~~ the goal of this language is to be easier than python in every way while being as fast a c++ and being memory safe (copying rust).
+~~ i think this is going to be the next big thing. in 1970 it was c, in 1999 it was c++, on september 11 2001 java caused a no-no because java bad.
+~~      jk javas fine.
+~~ and in 2022 the big thing is rust.
+~~
+~~ so the compiler will detect things like "<<<hello world!" and include the right stuff automatically.
+~~ any programs you write in jc will be bear bones as fuck, only including the absolute necessary and the memory safety thing--but that's it.
+~~ if the program includes stuff automagicly for you it will give you a warning.
+
+
+
+
+<<< please enter your name: >>><x> <<<< nice to meet you {x} ;
+
+~~ == 'stdout <<< "please enter your name: " ; stdin >> str x ; stdout <<< "nice to meet you " <<< x ;'
+~~ i like this because we make use of the fish operator ">>><x>" the x in that is the variable name to put the input from the user into.
+~~ but you can also just do ">>>x" and that works fine to.
+~~ "<<< please enter your name: >>><x> <<<< nice to meet you {x};" "<<< please enter your name: >>><x> <<<< nice to meet you {x};
+~~ remember that "<<<" is equal to "stdout << " and >>> is equal to "stdin >> "
+
+
+
+
+pub fun void std::term::write ( char *format! , ...arguments... ) {
+    for (int,char i,c; i=0 : c : i++ ; c = format[i]) {
+        if ( c == '\0' ) { break } ~~ jayci does not require semi colons
+
+        else if ( c == '{' ) {
+            i++
+            ~~ ...
+        }
+
+        else { <<< {c} <<< }
+    }
+}
+
+
+
+
+~~ while:       most basic loop, continue looping unless a condition is false.
+~~ do while:    do something first, then continue looping if a condition is true.
+~~ for:         step 1:     check if a condition is true,
+~~                  step 2: assign variable declared in the first segment (see below),
+~~                  step 3: update the mentioned variables according to the 3rd segment (see below),
+~~                  step 4: then check if a condition is true, stop looping if false, else repeat from step 2.
+~~ do for:      step 1:     assign variable declared in the first segment (see below),
+~~                  step 2: execute the contents of the loop,
+~~                  step 3: update the mentioned variables according to the 3rd segment (see below),
+~~                  step 4: then check if a condition is true, stop looping if false, else repeat from step 2.
+~~
+~~
+~~ for (int,char i,c; i=0 : c : i++ ; c = format[i]) {
+~~      ^---------------^   ^   ^-----------------^
+~~         ^ sg1           sg2     ^ sg3
+~~
+~~ sg1 AKA first segment:   here is where you define any variables to initialize before starting the loop. you must declare an index.
+~~ sg2 AKA second segment:  sg2 is where you declare the condition to be checked on each cycle of the loop.
+~~ sg3 AKA third segment:   third segment is where you declare what changes to be made to the initialize variables from sg1 for each
+~~                              cycle of the loop. you must update your index variable.
+~~
+~~ note 1:  in sg1 you can see a weird syntax with commas between the data types and identifiers. "int,char" and "i,c".
+~~              this allows you to shorten things. "int,char i,c" is equivalent to "int i ; char c".
+~~ note 2:  in sg2 you should see that there is one char 'c' sometimes you can just put an identifier and the compiler will
+~~              know what you are talking about because of defaults. in this case it defaults to "c != '\0'".
+~~              but say this was an if statement instead of a loop, it would instead mean "c != null".
+~~ note 3:  in sg3 you can see that we are updating two variables seperated by semicolon. they will be update at the end of each loop cycle.
+
+
+
+
+/~/
+ ~ you can also do the following:
+
+
+#include <std/fstream>::{stdout, fstream};
+~~                       ^      ^
+~~                       x      y
+stdout << "hello world!\n" ;
+~~ ^   ^
+~~ x   y
+
+
+/~/

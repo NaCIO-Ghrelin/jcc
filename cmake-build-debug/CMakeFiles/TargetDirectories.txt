@@ -1,0 +1,3 @@
+/Users/joel/CLionProjects/jcc/cmake-build-debug/CMakeFiles/jcc.dir
+/Users/joel/CLionProjects/jcc/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/joel/CLionProjects/jcc/cmake-build-debug/CMakeFiles/rebuild_cache.dir
